@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "372136938768",
+    "project_id": "codiaadv-826b2",
+    "storage_bucket": "codiaadv-826b2.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:372136938768:android:0102547219be2e20572995",
+        "android_client_info": {
+          "package_name": "com.example.codia_adv"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA3wCdPQqfaP11ax34vyzusEQTItVK_HCU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
