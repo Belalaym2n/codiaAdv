@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 
 class AppConstants{
+
   static const String base_url = "https://accept.paymob.com/api";
   static const String auth_taken_enpoint = "/auth/tokens";
   static const String order_id_enpoint = "/ecommerce/orders";

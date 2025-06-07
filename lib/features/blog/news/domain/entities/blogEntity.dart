@@ -1,26 +1,62 @@
-class BlogEntity {
-  String? image;
-  String? headLine;
-  String? description;
-  String? date;
+class GetBlogEntity {
+  final String id;
+  final String imageUrl;
+  final String headline;
+  final String description;
+  final String blogDate;
+  final String createdAt;
+  final String facebookLink;
+  final String instagramLink;
+  final String googlePlayLink;
+  final String amazonLink;
+  final String appStoreLink;
+  final String linkedinLink;
 
-  BlogEntity({this.image, this.headLine, this.description, this.date});
+  GetBlogEntity({
+    required this.id,
+    required this.instagramLink,
+    required this.imageUrl,
+    required this.headline,
+    required this.description,
+    required this.blogDate,
+    required this.createdAt,
+    required this.facebookLink,
+    required this.googlePlayLink,
+    required this.amazonLink,
+    required this.appStoreLink,
+    required this.linkedinLink,
+  });
 
-   factory BlogEntity.fromJson(Map<String, dynamic> json) {
-    return BlogEntity(
-      image: json['image'] as String?,
-      headLine: json['headLine'] as String?,
-      description: json['description'] as String?,
-      date: json['date'] as String?,
+  factory GetBlogEntity.fromJson(Map<String, dynamic> json) {
+    return GetBlogEntity(
+      id: json['id'] ?? '',
+      imageUrl: json['image_url'] ?? '',
+      instagramLink: json['instagramLink'] ?? '',
+      headline: json['headline'] ?? '',
+      description: json['description'] ?? '',
+      blogDate: json['blog_date'] ?? '',
+      createdAt: json['createdAt'] ?? '',
+      facebookLink: json['facebook_link'] ?? '',
+      googlePlayLink: json['google_play_link'] ?? '',
+      amazonLink: json['amazon_link'] ?? '',
+      appStoreLink: json['app_store_link'] ?? '',
+      linkedinLink: json['linkedin_link'] ?? '',
     );
   }
 
    Map<String, dynamic> toJson() {
     return {
-      'image': image,
-      'headLine': headLine,
+      'id': id,
+      'image_url': imageUrl,
+      'headline': headline,
       'description': description,
-      'date': date,
+      'blogDate': blogDate,
+      'createdAt': createdAt,
+      'facebookLink': facebookLink,
+      'googlePlayLink': googlePlayLink,
+      'amazonLink': amazonLink,
+      'appStoreLink': appStoreLink,
+      'linkedinLink': linkedinLink,
     };
   }
 }

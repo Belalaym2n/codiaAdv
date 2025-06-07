@@ -8,7 +8,7 @@ import '../repositories/blogDomainUseCase.dart';
   BlogDomainRepo  repo;
 
   BlogUseCase(this.repo);
-  Future<Result<List<BlogEntity>>>call() async {
+  Future<Result<List<GetBlogEntity>>>call() async {
   return await  repo.getBlogs();
   }
 }

@@ -9,7 +9,7 @@ class BlogRepoImpl implements BlogDomainRepo {
   BlogRepoImpl({required this.remoteDs});
 
   @override
-  Future<Result<List<BlogEntity>>> getBlogs() async {
+  Future<Result<List<GetBlogEntity>>> getBlogs() async {
     return await remoteDs.fetchBlogs();
   }
 }
