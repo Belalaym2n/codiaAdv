@@ -1,3 +1,4 @@
+import 'package:codia_adv/features/bottomNavAdmin/bottomNavAdmin.dart';
 import 'package:codia_adv/features/contactUs/footor.dart';
 import 'package:codia_adv/features/homePage/widgets/homePageItem.dart';
 import 'package:codia_adv/features/splash/splash_screen.dart';
@@ -5,24 +6,23 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../features/about_us/presentation/pages/aboutUsScreen.dart';
-import '../features/blog/news/presentation/pages/new_screen.dart';
+ import '../features/blog/news/presentation/pages/newsScreen.dart';
 import '../features/contactUs/contactUs.dart';
 import '../features/mobileApplication/presentation/widgets/mobileApplicationItem.dart';
 
 
 class AppRoutes {
-  static const String splash = "adad/";
-  static const String addActivity = "xcv/";
-  static const String signUp = "signUp/";
+  static const String splash = "/";
+   static const String signUp = "signUp/";
   static const String onBoard = "/sfsdf";
   static const String orders = "sfsffdf";
   static const String login = "sdf/";
   static const String autoLogin = "login/";
   static const String verifyScreen = "verify";
-  static const String homeScreen = "/";
+  static const String homeScreen = "/sdfsff";
    static const String aboutUs = "aboutUs/";
   static const String mobileApp = "5784/";
-  static const String bottomNavAdmin = "sdf/";
+  static const String bottomNavAdmin = "sdfs/";
   static const String personDetailed = "err";
   static const String blog = "sdfsdf";
   static const String contactUs = "/sdf";
@@ -43,10 +43,15 @@ class Routes {
           builder: (context) => const AboutUsScreen(),
         );
 
+      case AppRoutes.bottomNavAdmin:
+        return MaterialPageRoute(
+          builder: (context) => const BottomNavAdm(),
+        );
+
 
       case AppRoutes.blog:
         return MaterialPageRoute(
-          builder: (context) => const NewsScreen(),
+          builder: (context) =>   NewsScreen(),
         );
 
       case AppRoutes.splash:

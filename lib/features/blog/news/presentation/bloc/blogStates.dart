@@ -7,7 +7,7 @@ class BlogInitial extends BlogStates {}
 class BlogLoading extends BlogStates {}
 
 class BlogSuccess extends BlogStates {
- List< BlogEntity> blogs;
+ List< GetBlogEntity> blogs;
 
   BlogSuccess({required this.blogs});
 }

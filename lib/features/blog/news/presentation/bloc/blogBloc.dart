@@ -9,7 +9,9 @@ class BlogBloc extends Bloc<BlogEvents, BlogStates> {
   BlogBloc({required this.blogUseCase}) : super(BlogInitial()) {
     on<BlogTabTabbedEvents>((events, state) async {
       emit(BlogLoading());
-
+ await Future.delayed(Duration(
+   seconds: 2
+ ));
       final result = await blogUseCase();
 
       if (result.isSuccess) {

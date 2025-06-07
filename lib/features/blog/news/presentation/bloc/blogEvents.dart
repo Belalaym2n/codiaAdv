@@ -4,7 +4,5 @@ abstract class BlogEvents{}
 
 
 class BlogTabTabbedEvents extends BlogEvents{
-
-
-}
+ }
 

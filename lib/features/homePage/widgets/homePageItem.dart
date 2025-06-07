@@ -3,7 +3,7 @@ import 'package:codia_adv/features/homePage/domain/models/designModels/serviceCo
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../../blog/news/presentation/pages/new_screen.dart';
+ import '../../blog/news/presentation/pages/newsScreen.dart';
 import '../../core/sharedWidget/responiveSharedWidget/header/headerMobile.dart';
 import '../../core/sharedWidget/responiveSharedWidget/header/headerWeb.dart';
 import '../../core/sharedWidget/responiveSharedWidget/header/tabletHeader.dart';
