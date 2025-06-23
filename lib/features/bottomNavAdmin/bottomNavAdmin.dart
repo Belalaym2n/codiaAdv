@@ -66,6 +66,13 @@ class _BottomNavAdmState extends State<BottomNavAdm> {
                     iconColor: Colors.white, // Icon color to match the theme
                   ),
 
+                  GButton(
+                    margin: EdgeInsets.symmetric(vertical:
+                    AppConstants.screenHeight * 0.02),
+                    icon: Icons.home_outlined, // Home icon
+                    text: 'Add App',
+                    iconColor: Colors.white, // Icon color to match the theme
+                  ),
                 ],
               ),
             )

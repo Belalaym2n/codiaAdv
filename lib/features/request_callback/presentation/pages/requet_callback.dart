@@ -1,11 +1,11 @@
 import 'package:codia_adv/config/utils/appImages.dart';
 import 'package:codia_adv/features/contactUs/footor.dart';
 import 'package:codia_adv/features/core/sharedWidget/responiveSharedWidget/header/headerWeb.dart';
-import 'package:codia_adv/features/homePage/widgets/homePageItem.dart';
+import 'package:codia_adv/features/homePage/presentation/homePageItem.dart';
 import 'package:codia_adv/features/request_callback/data/repositories/requestCallbackRepoImp.dart';
 import 'package:codia_adv/features/request_callback/presentation/bloc/states.dart';
 import 'package:codia_adv/features/request_callback/presentation/pages/requestCallbackWeb.dart';
-import 'package:codia_adv/features/request_callback/presentation/widgets/successWidget.dart';
+import 'package:codia_adv/features/request_callback/presentation/widgets/sharedWidget/successWidget.dart';
 import 'package:codia_adv/routing/appRoutes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -33,6 +33,8 @@ class _RequestCallbackState extends State<RequestCallback> {
 
   @override
   Widget build(BuildContext context) {
+    final h = MediaQuery.of(context).size.height;
+    final w = MediaQuery.of(context).size.width;
     bool isDesktop(double width) => width >= 1280;
     bool isTablet(double width) => width >= 600 && width < 1280;
     bool isMobile(double width) => width < 600;
@@ -64,7 +66,7 @@ class _RequestCallbackState extends State<RequestCallback> {
             messageController.clear();
 
             Navigator.of(context).pushAndRemoveUntil(
-              MaterialPageRoute(builder: (context) => SuccessWidget()),
+              MaterialPageRoute(builder: (context) => SuccessWidgetDesktop(h: h,w: w,)),
                   (route) => route.isFirst,
             );
           }
@@ -78,11 +80,10 @@ class _RequestCallbackState extends State<RequestCallback> {
                   children: [
                     LayoutBuilder(
                       builder: (context, constraints) {
-                        final width = constraints.maxWidth;
-                        final h = MediaQuery.of(context).size.height;
-                        final w = MediaQuery.of(context).size.width;
+                        final w = constraints.maxWidth;
+                        final h = constraints.maxHeight;
 
-                        if (isDesktop(width)) {
+                        if (isDesktop(w)) {
                           return RequestCallbackWeb(
                             nameController: nameController,
                             phoneController: phoneController,
