@@ -2,6 +2,7 @@
 import 'package:codia_adv/features/addBlog/presentation/widgets/addBlogItem.dart';
 import 'package:flutter/material.dart';
 
+import '../addApplication/presentation/pages/addApplication.dart';
 import '../addBlog/presentation/pages/addBlogScreen.dart';
 
 class BottomNavViewModel extends ChangeNotifier {
@@ -23,6 +24,7 @@ class BottomNavViewModel extends ChangeNotifier {
 
   List<Widget> adminPages=[
     const AddBlogScreen(),
+    const AddApplication(),
   ];
 
 }

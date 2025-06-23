@@ -1,14 +1,15 @@
 import 'package:codia_adv/features/bottomNavAdmin/bottomNavAdmin.dart';
 import 'package:codia_adv/features/contactUs/footor.dart';
-import 'package:codia_adv/features/homePage/widgets/homePageItem.dart';
+import 'package:codia_adv/features/homePage/presentation/homePageItem.dart';
 import 'package:codia_adv/features/splash/splash_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../features/about_us/presentation/pages/aboutUsScreen.dart';
  import '../features/blog/news/presentation/pages/newsScreen.dart';
-import '../features/contactUs/contactUs.dart';
-import '../features/mobileApplication/presentation/widgets/mobileApplicationItem.dart';
+import '../features/contactUs/page/contactUs.dart';
+import '../features/mobileApplication/presentation/pages/mobileApplicationSection.dart';
+import '../features/mobileApplication/presentation/widgets/mobileAppsSectionWep/mobileApplicationItem.dart';
 
 
 class AppRoutes {
@@ -22,7 +23,7 @@ class AppRoutes {
   static const String homeScreen = "/sdfsff";
    static const String aboutUs = "aboutUs/";
   static const String mobileApp = "5784/";
-  static const String bottomNavAdmin = "sdfs/";
+  static const String bottomNavAdmin = "sdfsdf/";
   static const String personDetailed = "err";
   static const String blog = "sdfsdf";
   static const String contactUs = "/sdf";
@@ -71,7 +72,7 @@ class Routes {
         );
       case AppRoutes.mobileApp:
         return MaterialPageRoute(
-          builder: (context) =>   MobileApplicationItem(),
+          builder: (context) =>   MobileApplicationSection(),
         );
 
       default:

@@ -1,5 +1,5 @@
 import 'package:codia_adv/config/utils/appConstants.dart';
-import 'package:codia_adv/features/homePage/widgets/homePageItem.dart';
+import 'package:codia_adv/features/homePage/presentation/homePageItem.dart';
 import 'package:codia_adv/routing/appRoutes.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';

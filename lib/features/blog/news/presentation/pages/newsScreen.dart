@@ -27,7 +27,7 @@ class _NewsScreenState extends State<NewsScreen> {
   final blogUseCase = BlogUseCase(blogRepo);
 
   return BlocProvider(
-      create: (_) => BlogBloc(blogUseCase: blogUseCase)..add(BlogTabTabbedEvents()),
+      create: (_) => BlogBloc.getInstance(blogUseCase: blogUseCase)..add(BlogTabTabbedEvents()),
     child:  LayoutBuilder(
         builder: (context, constraints) {
 

@@ -12,6 +12,7 @@ class AppImages{
   static const String profile='${AppConstants.imageUrl}profile.png';
   static const String travel='${AppConstants.imageUrl}v2.jpg';
   static const String search='${AppConstants.imageUrl}search.png';
+  static const String teamImage='${AppConstants.imageUrl}render (1).png';
   static const String requestCall='${AppConstants.imageUrl}request.png';
 
   static const String manafea1='${AppConstants.imageUrl}manafea1.jpeg';
