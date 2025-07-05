@@ -15,6 +15,7 @@ class AppImages{
   static const String teamImage='${AppConstants.imageUrl}render (1).png';
   static const String requestCall='${AppConstants.imageUrl}request.png';
 
+  static const String gaol='${AppConstants.imageUrl}goal.jpg';
   static const String manafea1='${AppConstants.imageUrl}manafea1.jpeg';
   static const String manafea2='${AppConstants.imageUrl}manafea2.jpeg';
   static const String manafea3='${AppConstants.imageUrl}manafea3.jpeg';

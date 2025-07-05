@@ -1,6 +1,5 @@
 import 'package:codia_adv/features/bottomNavAdmin/bottomNavAdmin.dart';
-import 'package:codia_adv/features/contactUs/footor.dart';
-import 'package:codia_adv/features/homePage/presentation/homePageItem.dart';
+ import 'package:codia_adv/features/homePage/presentation/homePageItem.dart';
 import 'package:codia_adv/features/splash/splash_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +8,6 @@ import '../features/about_us/presentation/pages/aboutUsScreen.dart';
  import '../features/blog/news/presentation/pages/newsScreen.dart';
 import '../features/contactUs/page/contactUs.dart';
 import '../features/mobileApplication/presentation/pages/mobileApplicationSection.dart';
-import '../features/mobileApplication/presentation/widgets/mobileAppsSectionWep/mobileApplicationItem.dart';
 
 
 class AppRoutes {

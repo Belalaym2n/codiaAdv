@@ -1,15 +1,7 @@
-import 'package:carousel_slider/carousel_slider.dart';
-import 'package:codia_adv/config/utils/appColors.dart';
+import 'dart:typed_data';
 import 'package:flutter/material.dart';
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-
-import 'package:animate_do/animate_do.dart';
+import 'package:flutter/services.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:codia_adv/config/utils/appColors.dart';
-import 'package:flutter/material.dart';
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-
-import '../../domain/models/imagesModel.dart';
 
 class ImageCarousel extends StatefulWidget {
   final double imageHeight;
@@ -27,92 +19,63 @@ class ImageCarousel extends StatefulWidget {
     this.dotBottomPadding = 15,
   }) : super(key: key);
 
-
-
   @override
   State<ImageCarousel> createState() => _ImageCarouselState();
 }
 
-
 class _ImageCarouselState extends State<ImageCarousel> {
+  Uint8List? imageBytes;
+  bool isLoading = true;
+
   @override
   void initState() {
     super.initState();
-
+    loadImage();
   }
-  bool _isImagesPrecached = false;
 
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    if (!_isImagesPrecached) {
-      for (var model in models) {
-        precacheImage(AssetImage(model.image), context);
-      }
-      _isImagesPrecached = true;
-    }
+  Future<void> loadImage() async {
+    final byteData = await rootBundle.load("assets/images/bg2_optimized.jpg");
+    setState(() {
+      imageBytes = byteData.buffer.asUint8List();
+      isLoading = false;
+    });
   }
-  final CarouselSliderController _controller = CarouselSliderController();
-  int _currentIndex = 0;
-
-  final List<ImagesModel> models = [
-    ImagesModel(
-      headline: "Build your digital dream with confidence",
-      subHeadline: "Innovate. Launch. Grow.",
-      image: "assets/images/bg2 - Copy.jpg",
-      description:
-      "From your idea lines to an achievement network. Let your thoughts become a reality with our expert team and scalable tech.",
-    ),
-
-  ];
-
-
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      alignment: Alignment.center,
-      children: [
-        _buildCarousel(),
-
-       ],
+    return isLoading
+        ? Container(
+      height: widget.imageHeight,
+      child: Center(child: CircularProgressIndicator()),
+    )
+        : buildCarousel(
+      h: widget.imageHeight,
+      imageBytes: imageBytes!,
     );
   }
+}
 
-  Widget _buildCarousel() {
-    return CarouselSlider.builder(
-      itemCount: models.length,
-      carouselController: _controller,
-
-      options: CarouselOptions(
-
-
-        height: widget.imageHeight,
-
-        autoPlay: true,
-        autoPlayInterval: Duration(seconds: 4),
-        enlargeCenterPage: false,
-         onPageChanged: (index, reason) {
-          setState(() => _currentIndex = index);
-        },
-      ),
-      itemBuilder: (context, index, realIndex) {
-        return FadeIn(
-          duration: Duration(milliseconds: 800),
-          child: Image.asset(
-            models[index].image,
-            fit: BoxFit.cover,
-            width: double.infinity,
-            filterQuality: FilterQuality.low,
-            cacheWidth: 1200,
-          ),
-        );
-
-      },
-    );
-  }
-
-
-
- }
-
+Widget buildCarousel({
+  required double h,
+  required Uint8List imageBytes,
+}) {
+  return CarouselSlider.builder(
+    itemCount: 1,
+    options: CarouselOptions(
+      height: h,
+      autoPlay: true,
+      autoPlayInterval: Duration(seconds: 4),
+      enlargeCenterPage: false,
+    ),
+    itemBuilder: (context, index, realIndex) {
+      return RepaintBoundary(
+        child: Image.memory(
+          imageBytes,
+          fit: BoxFit.cover,
+          width: double.infinity,
+          filterQuality: FilterQuality.low,
+        ),
+      );
+    },
+  );
+}

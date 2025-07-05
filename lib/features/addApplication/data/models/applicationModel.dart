@@ -9,6 +9,9 @@ class ApplicationModel {
   final String image4;
   final String? message;
 
+  final String? amazone_url;
+  final String? google_plauurl;
+  final String? app_store_url;
   ApplicationModel({
     required this.headline,
     required this.description,
@@ -17,6 +20,9 @@ class ApplicationModel {
     required this.image3,
     required this.image4,
     this.message,
+    this.amazone_url,
+    this.google_plauurl,
+    this.app_store_url,
   });
   factory ApplicationModel.fromJson(Map<String, dynamic> json) {
     return ApplicationModel(
@@ -24,7 +30,10 @@ class ApplicationModel {
       description: json['description'] ?? '',
       image1: json['image1'] ?? '',
       image2: json['image2'] ?? '',
-      image3: json['image3'] ?? '',
+      amazone_url: json['amazone_url'] ?? '',
+      google_plauurl: json['google_play_url'] ?? '',
+      app_store_url: json['app_store_url'] ?? '',
+       image3: json['image3'] ?? '',
       image4: json['image4'] ?? '',
       message: json['message'], // nullable
     );
@@ -39,6 +48,11 @@ class ApplicationModel {
       image2: application.image2,
       image3: application.image3,
       image4: application.image4,
+      amazone_url: application.amazone_url,
+
+app_store_url: application.app_store_url,
+      google_plauurl: application.google_plauurl,
+
       message: application.message,
     );
   }

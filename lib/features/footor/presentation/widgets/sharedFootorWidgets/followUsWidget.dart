@@ -5,34 +5,38 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../../domain/socialMediaModel.dart';
 
 Widget socialPlatforms({
-  required double w
+  required double w,
 }) {
   List<SocialMediaModel> social = SocialMediaModel.socialMediaItems;
 
   return Column(
     children: List.generate(social.length, (i) {
       return Padding(
-        padding: const EdgeInsets.only(bottom: 12.0),
+        padding: EdgeInsets.only(bottom: w * 0.0078), // 12 / 1525
         child: InkWell(
           onTap: () async {
-            navigateToUrl(social[i].url );
+            navigateToUrl(social[i].url);
           },
           child: Row(
             children: [
               Container(
-                padding: EdgeInsets.all(8),
+                padding: EdgeInsets.all(w * 0.0052), // 8 / 1525
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   color: Colors.white10,
                 ),
-                child: Icon(social[i].icon, color: Colors.white, size: 16),
+                child: Icon(
+                  social[i].icon,
+                  color: Colors.white,
+                  size: w * 0.0105, // 16 / 1525
+                ),
               ),
-              const SizedBox(width: 12),
+              SizedBox(width: w * 0.0078), // 12 / 1525
               Text(
                 social[i].label,
                 style: TextStyle(
                   color: Colors.grey.shade300,
-                  fontSize: 15.5,
+                  fontSize: w * 0.0102, // 15.5 / 1525
                   fontWeight: FontWeight.w500,
                   letterSpacing: 0.3,
                 ),
@@ -55,12 +59,12 @@ navigateToUrl(String url) async {
 }
 
 Widget descriptionForSocial({
-  required double w
+  required double w,
 }) {
   return Text(
     "Stay connected with us through our social media\n channels for updates, news, and insights.",
     style: TextStyle(
-      fontSize: 14.5,
+      fontSize: w * 0.0095, // 14.5 / 1525
       color: Colors.grey.shade400,
       height: 1.5,
     ),
@@ -68,17 +72,21 @@ Widget descriptionForSocial({
 }
 
 Widget followText({
-  required double w
+  required double w,
 }) {
   return Text(
     "Follow Us",
     style: TextStyle(
-      fontSize: 26,
+      fontSize: w * 0.0170, // 26 / 1525
       fontWeight: FontWeight.w900,
       color: Colors.white,
       letterSpacing: 1.1,
       shadows: [
-        Shadow(blurRadius: 6, color: Colors.black26, offset: Offset(0, 2)),
+        Shadow(
+          blurRadius: 6,
+          color: Colors.black26,
+          offset: Offset(0, 2),
+        ),
       ],
     ),
   );

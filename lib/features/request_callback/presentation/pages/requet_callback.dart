@@ -1,8 +1,5 @@
-import 'package:codia_adv/config/utils/appImages.dart';
-import 'package:codia_adv/features/contactUs/footor.dart';
-import 'package:codia_adv/features/core/sharedWidget/responiveSharedWidget/header/headerWeb.dart';
-import 'package:codia_adv/features/homePage/presentation/homePageItem.dart';
-import 'package:codia_adv/features/request_callback/data/repositories/requestCallbackRepoImp.dart';
+  import 'package:codia_adv/features/core/sharedWidget/responiveSharedWidget/header/headerWeb.dart';
+ import 'package:codia_adv/features/request_callback/data/repositories/requestCallbackRepoImp.dart';
 import 'package:codia_adv/features/request_callback/presentation/bloc/states.dart';
 import 'package:codia_adv/features/request_callback/presentation/pages/requestCallbackWeb.dart';
 import 'package:codia_adv/features/request_callback/presentation/widgets/sharedWidget/successWidget.dart';
@@ -10,6 +7,7 @@ import 'package:codia_adv/routing/appRoutes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../core/sharedWidget/responiveSharedWidget/header/drawer.dart';
 import '../../data/data_sources/remoteDS/remoteDSImp.dart';
 import '../../domain/repositories/requestCallbackRepo.dart';
 import '../../domain/use_cases/requestCallbackUseCase.dart';
@@ -75,8 +73,7 @@ class _RequestCallbackState extends State<RequestCallback> {
           builder: (context, state) {
             return AbsorbPointer(
                 absorbing: state is RequestCallbackLoading,
-                child: Scaffold(
-                body: Stack(
+                child:Stack(
                   children: [
                     LayoutBuilder(
                       builder: (context, constraints) {
@@ -85,6 +82,7 @@ class _RequestCallbackState extends State<RequestCallback> {
 
                         if (isDesktop(w)) {
                           return RequestCallbackWeb(
+                            idDesktop: true,
                             nameController: nameController,
                             phoneController: phoneController,
                             emailController: emailController,
@@ -93,8 +91,17 @@ class _RequestCallbackState extends State<RequestCallback> {
                             h: h,
                             w: w,
                           );
-                        } else {
-                          return Container();
+                        } else if(isTablet(w)) {
+                          return RequestCallbackWeb(
+                            idDesktop: false,
+                            nameController: nameController,
+                            phoneController: phoneController,
+                            emailController: emailController,
+                            messageController: messageController,
+
+                            h: h,
+                            w: w,
+                          );
                         }
                         return Container();
                       },
@@ -103,7 +110,7 @@ class _RequestCallbackState extends State<RequestCallback> {
                       Center(child: CircularProgressIndicator()),
                   ],
                 ),
-                                ),
+
             );
           },
         ),

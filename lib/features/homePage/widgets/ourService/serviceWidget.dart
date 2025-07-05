@@ -18,6 +18,13 @@ class ServiceWidget extends StatefulWidget {
 }
 
 class _ServiceWidgetState extends State<ServiceWidget> {
+  late final List<ServiceModel> services;
+
+  @override
+  void initState() {
+    super.initState();
+    services = ServiceModel.getServices(context);
+  }
   bool _isHovering = false;
 
   @override
@@ -26,8 +33,9 @@ class _ServiceWidgetState extends State<ServiceWidget> {
     final service = services[widget.index];
 
     return MouseRegion(
-      onEnter: (_) => setState(() => _isHovering = true),
-      onExit: (_) => setState(() => _isHovering = false),
+      cursor: SystemMouseCursors.click,
+      onEnter: (_) => _setHover(true),
+      onExit: (_) => _setHover(false),
       child: GestureDetector(
         onTap: service.onTap,
         child: AnimatedContainer(
@@ -120,6 +128,12 @@ class _ServiceWidgetState extends State<ServiceWidget> {
       ),
     );
   }
+
+  void _setHover(bool value) {
+    if (_isHovering != value) {
+      setState(() => _isHovering = value);
+    }
+  }
 }
 
 class HoverArrowWidget extends StatelessWidget {
@@ -157,4 +171,5 @@ class HoverArrowWidget extends StatelessWidget {
       ),
     );
   }
+
 }

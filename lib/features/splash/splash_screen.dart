@@ -1,6 +1,9 @@
+import 'package:codia_adv/config/utils/appConstants.dart';
 import 'package:codia_adv/routing/appRoutes.dart';
 import 'package:flutter/material.dart';
-import 'package:codia_adv/config/utils/appColors.dart'; // حسب ملفك الخاص للألوان
+import 'package:codia_adv/config/utils/appColors.dart';
+
+import '../homePage/widgets/carsualImage/carsualImages.dart'; // حسب ملفك الخاص للألوان
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -20,32 +23,31 @@ class _SplashScreenState extends State<SplashScreen>
   @override
   void initState() {
     super.initState();
-
-    // دائرة التقدم: لونها يتغير بين الأحمر والأسود بشكل متتابع متكرر
-    _circleColorController = AnimationController(
+     _circleColorController = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 2),
     );
 
-    _circleColorAnimation = TweenSequence<Color?>(
-      [
-        TweenSequenceItem(
-          tween: ColorTween(begin: Colors.black, end: AppColors.primaryColor)
-              .chain(CurveTween(curve: Curves.easeInOut)),
-          weight: 50,
-        ),
-        TweenSequenceItem(
-          tween: ColorTween(begin: AppColors.primaryColor, end: Colors.black)
-              .chain(CurveTween(curve: Curves.easeInOut)),
-          weight: 50,
-        ),
-      ],
-    ).animate(_circleColorController);
+    _circleColorAnimation = TweenSequence<Color?>([
+      TweenSequenceItem(
+        tween: ColorTween(
+          begin: Colors.black,
+          end: AppColors.primaryColor,
+        ).chain(CurveTween(curve: Curves.easeInOut)),
+        weight: 50,
+      ),
+      TweenSequenceItem(
+        tween: ColorTween(
+          begin: AppColors.primaryColor,
+          end: Colors.black,
+        ).chain(CurveTween(curve: Curves.easeInOut)),
+        weight: 50,
+      ),
+    ]).animate(_circleColorController);
 
     _circleColorController.repeat(reverse: true);
 
-    // نص: يتحول تدريجياً من أسود إلى الأحمر (نفس لون primaryColor)
-    _textColorController = AnimationController(
+     _textColorController = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 3),
     );
@@ -96,10 +98,12 @@ class _SplashScreenState extends State<SplashScreen>
       animation: _circleColorAnimation,
       builder: (context, child) {
         return SizedBox(
-          width: 110,
-          height: 110,
+          width: 0.07*AppConstants.screenWidth,
+          height: 0.15*AppConstants.screenHeight,
           child: CircularProgressIndicator(
-            valueColor: AlwaysStoppedAnimation<Color?>(_circleColorAnimation.value),
+            valueColor: AlwaysStoppedAnimation<Color?>(
+              _circleColorAnimation.value,
+            ),
             strokeWidth: 3,
           ),
         );
@@ -137,7 +141,6 @@ class _SplashScreenState extends State<SplashScreen>
                 fontWeight: FontWeight.w600,
                 color: _textColorAnimation.value,
                 letterSpacing: 1.5,
-
               ),
             ),
           ],

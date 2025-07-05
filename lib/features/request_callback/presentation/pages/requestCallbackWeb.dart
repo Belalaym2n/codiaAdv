@@ -1,17 +1,10 @@
+import 'package:codia_adv/features/core/sharedWidget/responiveSharedWidget/header/tabletHeader.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../config/utils/appImages.dart';
-import '../../../contactUs/footor.dart';
+import '../../../core/sharedWidget/responiveSharedWidget/header/drawer.dart';
 import '../../../core/sharedWidget/responiveSharedWidget/header/headerWeb.dart';
-import '../../domain/entities/callbackModel.dart';
-import '../../domain/entities/validator.dart';
-import '../bloc/bloc.dart';
-import '../bloc/events.dart';
-import '../widgets/sharedWidget/button.dart';
-import '../widgets/sharedWidget/textFormField.dart';
-import '../widgets/sharedWidget/texts.dart';
+
 import '../widgets/web/requestCallbackWebItem.dart';
 
 class RequestCallbackWeb extends StatefulWidget {
@@ -19,6 +12,7 @@ class RequestCallbackWeb extends StatefulWidget {
     super.key,
     required this.h,
     required this.w,
+    required this.idDesktop,
 
     required this.phoneController,
     required this.nameController,
@@ -28,6 +22,7 @@ class RequestCallbackWeb extends StatefulWidget {
 
   double h;
   double w;
+  bool idDesktop;
   TextEditingController nameController;
   TextEditingController phoneController;
   TextEditingController messageController;
@@ -40,20 +35,28 @@ class RequestCallbackWeb extends StatefulWidget {
 class _RequestCallbackWebState extends State<RequestCallbackWeb> {
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return  Scaffold(
+        drawer:  Drawer(
+        child: DrawerScreen(
+        width: widget.w,
+        height: widget.h,
+    ),
+    ),
+    body: Column(
       children: [
-        WebHeader(width: widget.w, height: widget.h),
+       widget.idDesktop?
+        WebHeader(width: widget.w, height: widget.h):TabletHeader(width: widget.w, height: widget.h),
 
         RequestCallbackWebItem(
+          isDesktop: widget.idDesktop,
           nameController: widget.nameController,
           phoneController: widget.phoneController,
           emailController: widget.emailController,
           messageController: widget.messageController,
-
           h: widget.h,
           w: widget.w,
         ),
       ],
-    );
+    ));
   }
 }

@@ -1,13 +1,14 @@
 import 'package:codia_adv/features/addApplication/domain/entities/applicationEntity.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
+
+import '../../../../core/sharedWidget/socialMediaLinks/socialMediaLinks.dart';
 
 Widget appDetails({
   required int index,
   required double w,
   required double h,
-  required bool addAnimation,
+  bool isDesktop=true,
   required List<ApplicationEntity> apps,
 }) {
   return Container(
@@ -22,49 +23,33 @@ Widget appDetails({
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        addAnimation == true
-            ? aboutApp(w, h).animate().fade().slideX(begin: 0.2)
-            : aboutApp(w, h),
+        aboutApp(w, h,isDesktop),
 
         SizedBox(height: h * 0.021),
-        addAnimation == true
-            ? buildHeadline(apps, w, index).animate().fade(delay: 300.ms)
-            : buildHeadline(apps, w, index),
+
+        buildHeadline(apps, w, index),
 
         SizedBox(height: h * 0.016),
-        addAnimation == true
-            ? buildDescription(
-              apps,
-              w,
-              index,
-              h,
-            ).animate().fade(delay: 600.ms).slideY(begin: 0.1)
-            : buildDescription(apps, w, index, h),
+
+        buildDescription(apps, w, index, h),
 
         SizedBox(height: h * 0.032),
-        addAnimation == true
-            ? buildIcons(w).animate().fade(delay: 900.ms).scale()
-            : buildIcons(w),
+
+        socialMediaLinks( w: w,app: apps[index],isBlog: false),
       ],
     ),
   );
 }
 
-Widget buildIcons(double w) {
- return Row(
-    children: [
-      Icon(Icons.shop, size: w * 0.018, color: Colors.black87),
-      SizedBox(width: w * 0.01),
-      Icon(Icons.android, size: w * 0.018, color: Colors.green),
-      SizedBox(width: w * 0.01),
-      Icon(Icons.apple, size: w * 0.018, color: Colors.black),
-    ],
-  );
-}
 
-Widget buildDescription(List<ApplicationEntity> apps, double w, int index, double h) {
- return SizedBox(
-    height: h * 0.3,
+Widget buildDescription(
+  List<ApplicationEntity> apps,
+  double w,
+  int index,
+  double h,
+) {
+  return SizedBox(
+    height: h * 0.37,
     child: SingleChildScrollView(
       child: Text(
         apps[index].description,
@@ -79,10 +64,10 @@ Widget buildDescription(List<ApplicationEntity> apps, double w, int index, doubl
 }
 
 Widget buildHeadline(List<ApplicationEntity> apps, double w, int index) {
- return Text(
+  return Text(
     apps[index].headline,
     style: TextStyle(
-      fontSize: w * 0.012,
+      fontSize: w * 0.011,
       color: Colors.black,
       fontWeight: FontWeight.bold,
       height: 1.6,
@@ -90,7 +75,7 @@ Widget buildHeadline(List<ApplicationEntity> apps, double w, int index) {
   );
 }
 
-Widget aboutApp(double w, double h) {
+Widget aboutApp(double w, double h,bool isDesktop) {
   return Container(
     padding: EdgeInsets.symmetric(vertical: h * 0.016, horizontal: w * 0.01),
     decoration: BoxDecoration(
@@ -111,7 +96,7 @@ Widget aboutApp(double w, double h) {
         Text(
           'About this application',
           style: TextStyle(
-            fontSize: w * 0.013,
+            fontSize:isDesktop? w * 0.013:w*0.016,
             fontWeight: FontWeight.w900,
             color: const Color(0xFF252c49),
           ),
