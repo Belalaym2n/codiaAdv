@@ -14,7 +14,10 @@ class BlogBloc extends Bloc<BlogEvents, BlogStates> {
   final BlogUseCase blogUseCase;
 
   static BlogBloc? _instance;
-
+  static BlogBloc getInstance({required BlogUseCase blogUseCase}) {
+    _instance ??= BlogBloc._internal(blogUseCase: blogUseCase);
+    return _instance!;
+  }
   BlogBloc._internal({required this.blogUseCase}) : super(BlogInitial()) {
     on<BlogTabTabbedEvents>((events, emit) async {
       if (isLoadedBefore) return; // ✅ لو اتحملت قبل كده، ما تعملش حاجة
@@ -32,8 +35,5 @@ class BlogBloc extends Bloc<BlogEvents, BlogStates> {
     });
   }
 
-  static BlogBloc getInstance({required BlogUseCase blogUseCase}) {
-    _instance ??= BlogBloc._internal(blogUseCase: blogUseCase);
-    return _instance!;
-  }
+
 }

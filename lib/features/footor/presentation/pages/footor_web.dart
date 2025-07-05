@@ -17,11 +17,12 @@ import '../../../homePage/domain/models/menuModel.dart';
 
 class FootorWeb extends StatefulWidget {
   FootorWeb({super.key,
+    this.isDesktop=true,
     required this.w, required this.h});
 
   double h;
   double w;
-
+bool isDesktop;
 
   @override
   State<FootorWeb> createState() => _FooterSectionState();
@@ -60,7 +61,7 @@ class _FooterSectionState extends State<FootorWeb>
         children: [
           // Header Animation
           buildFooterHeader(
-
+     isDesktop: widget.isDesktop,
 
               w: widget.w,
            ),
@@ -68,12 +69,24 @@ class _FooterSectionState extends State<FootorWeb>
           buildLineFooter(w: widget.w,
               ),
             SizedBox(height: 0.068*widget.h),
-          buildContent(),
+          widget.isDesktop?
+          buildContent():Row(
+            children: [       Expanded(child:
+            Center(child: buildAboutCodiaAdv(widget.isDesktop,
+                context,widget.w,widget.h
+            ))),
+              Expanded(child: Center(child: _buildQuickLinks(widget.w,widget.isDesktop))),],
+          ),
+          if(widget.isDesktop==false)
+            SizedBox(height: 0.048*widget.h),
 
+          if(widget.isDesktop==false)
+            Center(child: _buildSocialLinks(widget.w)),
           SizedBox(height: 0.068*widget.h),
           Divider(color: Colors.grey.shade800),
           SizedBox(height: 0.02*widget.h),
-          buildCompanyNameForFootor(w: widget.w
+          buildCompanyNameForFootor(w: widget.w,
+            isDesktop: widget.isDesktop
 
           ),
         ],
@@ -92,9 +105,10 @@ class _FooterSectionState extends State<FootorWeb>
 
         children: [
           Expanded(child: Center(child: buildAboutCodiaAdv(
-              context
+widget.isDesktop,
+              context,widget.w,widget.h
           ))),
-          Expanded(child: Center(child: _buildQuickLinks(widget.w))),
+          Expanded(child: Center(child: _buildQuickLinks(widget.w,widget.isDesktop))),
           Expanded(child: Center(child: _buildSocialLinks(widget.w))),
         ],
       ),
@@ -104,7 +118,7 @@ class _FooterSectionState extends State<FootorWeb>
 
 
 
-  Widget _buildQuickLinks(double w) {
+  Widget _buildQuickLinks(double w,bool isDesktop) {
     List<MenuModel>menu = MenuModel.getItems(context);
 
     return Column(
@@ -113,7 +127,8 @@ class _FooterSectionState extends State<FootorWeb>
         Text(
           "Quick Links",
           style: TextStyle(
-            fontSize: 0.017*w,
+            fontSize:isDesktop?
+            0.017*w:0.02*w,
             fontWeight: FontWeight.w900,
             color: Colors.white,
             letterSpacing: 1.2,
@@ -152,12 +167,12 @@ class _FooterSectionState extends State<FootorWeb>
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
 
-                      Expanded(child: _buildLinkItem(first,w)),
+                      Expanded(child: _buildLinkItem(first,w,isDesktop)),
 
                       Expanded(
                         child:
                         second != null
-                            ? _buildLinkItem(second,w)
+                            ? _buildLinkItem(second,w,isDesktop)
                             : Container(),
                       ),
                     ],
@@ -171,7 +186,7 @@ class _FooterSectionState extends State<FootorWeb>
     );
   }
 
-  Widget _buildLinkItem(MenuModel model,double w) {
+  Widget _buildLinkItem(MenuModel model,double w,bool isDesktop) {
     return InkWell(
       onTap: () {
         model.navigate();
@@ -182,14 +197,15 @@ class _FooterSectionState extends State<FootorWeb>
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(Icons.double_arrow, color: Color(0xFFdf0a0a), size: w*0.011),
+            Icon(Icons.double_arrow, color: Color(0xFFdf0a0a), size:
+            isDesktop?w*0.011:w*0.014),
             SizedBox(width: 0.0039*w),
             Text(
               model.pageName,
               style: TextStyle(
                 overflow: TextOverflow.ellipsis,
                 color: Colors.grey.shade300,
-                fontSize: 0.0098*w,
+                fontSize: isDesktop?0.0098*w:0.012*w,
                 fontWeight: FontWeight.w500,
                 letterSpacing: 0.3,
               ),

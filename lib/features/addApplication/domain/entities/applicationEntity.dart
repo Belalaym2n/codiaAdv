@@ -8,6 +8,9 @@ class ApplicationEntity {
   final String image3;
   final String image4;
   final String? message;
+  final String? amazone_url;
+  final String? google_plauurl;
+  final String? app_store_url;
 
   ApplicationEntity({
     required this.headline,
@@ -17,6 +20,9 @@ class ApplicationEntity {
     required this.image3,
     required this.image4,
     this.message,
+    this.amazone_url,
+    this.google_plauurl,
+    this.app_store_url,
   });
 
   factory ApplicationEntity.toEntity(ApplicationModel application) {
@@ -27,6 +33,9 @@ class ApplicationEntity {
       image2: application.image2,
       image3: application.image3,
       image4: application.image4,
+      app_store_url: application.app_store_url,
+      amazone_url: application.amazone_url,
+      google_plauurl: application.google_plauurl,
     );
   }
 
@@ -38,8 +47,14 @@ class ApplicationEntity {
     String? image3,
     String? image4,
     String? message,
+    String? google_plauurl,
+    String? appStore,
+    String? amazon,
   }) {
     return ApplicationEntity(
+      app_store_url: appStore??this.app_store_url,
+      google_plauurl:google_plauurl??this.google_plauurl ,
+      amazone_url: amazon??this.amazone_url,
       headline: headline ?? this.headline,
       description: description ?? this.description,
       image1: image1 ?? this.image1,

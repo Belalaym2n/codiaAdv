@@ -5,19 +5,19 @@ import 'package:codia_adv/features/mobileApplication/data/repositories/getAppsDa
 import 'package:codia_adv/features/mobileApplication/domain/use_cases/getAppsUserCase.dart';
 import 'package:codia_adv/features/mobileApplication/presentation/bloc/events.dart';
 import 'package:codia_adv/features/mobileApplication/presentation/bloc/getAppsBloc.dart';
-import 'package:codia_adv/features/mobileApplication/presentation/pages/webMobileApplicationSection.dart';
-import 'package:codia_adv/features/mobileApplication/presentation/widgets/mobileAppsSectionWep/mobileApplicationItem.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../domain/repositories/getAppsDomainRepo.dart';
+import 'applicationSectionTablet.dart';
+import 'desktopMobileApplicationSection.dart';
 
 class MobileApplicationSection extends StatelessWidget {
   const MobileApplicationSection({super.key});
 
-  bool isDesktop(double width) => width >= 1280;
+  bool isDesktop(double width) => width >= 1024;
 
-  bool isTablet(double width) => width >= 600 && width < 1280;
+  bool isTablet(double width) => width >= 600 && width < 1024;
 
   bool isMobile(double width) => width < 600;
 
@@ -29,16 +29,18 @@ class MobileApplicationSection extends StatelessWidget {
     return BlocProvider(
       create:
           (context) =>
-              GetAppsBloc(useCase: getAppsUseCase)
+              GetAppsBloc.getInstance(useCase: getAppsUseCase)
                 ..add(TapTappedGetAppsEvents()),
       child: LayoutBuilder(
         builder: (context, constraints) {
           final width = constraints.maxWidth;
-          final h = MediaQuery.of(context).size.height; // ✅ التعديل هنا
-          final w = MediaQuery.of(context).size.width; // ✅ التعديل هنا
+          final h = MediaQuery.of(context).size.height;
+          final w = MediaQuery.of(context).size.width;
 
           if (isDesktop(width)) {
-            return WebMobileApplicationSection(height: h, width: w);
+            return DesktopMobileApplicationSection(height: h, width: w);
+          } else if (isTablet(width)) {
+             return ApplicationPageTablet(width: w, height: h);
           }
           return Container();
         },

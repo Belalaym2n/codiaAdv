@@ -3,9 +3,14 @@ import 'package:flutter/cupertino.dart';
 import 'our_servicies.dart';
 
 class AnimatedServicesWrapper extends StatefulWidget {
-  const AnimatedServicesWrapper({super.key, required this.width, required this.height});
+    AnimatedServicesWrapper({
+
+    this.isDesktop=true
+    ,
+    super.key, required this.width, required this.height});
   final double width;
   final double height;
+  bool isDesktop;
 
   @override
   State<AnimatedServicesWrapper> createState() => _AnimatedServicesWrapperState();
@@ -51,7 +56,9 @@ class _AnimatedServicesWrapperState extends State<AnimatedServicesWrapper> with 
       position: _offsetAnimation,
       child: FadeTransition(
         opacity: _fadeAnimation,
-        child: OurServicesSectionWeb(height: widget.height, width: widget.width),
+        child: OurServicesSectionWeb(
+            isDesktop: widget.isDesktop,
+            height: widget.height, width: widget.width),
       ),
     );
   }

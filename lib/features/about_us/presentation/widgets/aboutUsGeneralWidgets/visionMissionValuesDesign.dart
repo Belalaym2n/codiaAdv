@@ -1,31 +1,37 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:visibility_detector/visibility_detector.dart';
-
 import '../../../../../config/utils/appColors.dart';
 
 class MissionVisionAnimatedSection extends StatefulWidget {
   final double w;
+
   const MissionVisionAnimatedSection({super.key, required this.w});
 
   @override
-  State<MissionVisionAnimatedSection> createState() => _MissionVisionAnimatedSectionState();
+  State<MissionVisionAnimatedSection> createState() =>
+      _MissionVisionAnimatedSectionState();
 }
 
-class _MissionVisionAnimatedSectionState extends State<MissionVisionAnimatedSection> {
+class _MissionVisionAnimatedSectionState
+    extends State<MissionVisionAnimatedSection> {
   bool showMission = false;
   bool showVision = false;
   bool showValues = false;
 
+  double get h => widget.w * 0.65; // تقدير تقريبي للارتفاع
+
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 32.0, vertical: 64),
+      padding: EdgeInsets.symmetric(
+        horizontal: widget.w * 0.021, // 32 / 1525
+        vertical: h * 0.085, // 64 / 745
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          // MISSION
+          /// --- MISSION ---
           VisibilityDetector(
             key: const Key('mission'),
             onVisibilityChanged: (info) {
@@ -45,10 +51,12 @@ class _MissionVisionAnimatedSectionState extends State<MissionVisionAnimatedSect
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     _buildSectionHeader("Our Mission"),
-                    const SizedBox(height: 16),
+                    SizedBox(height: h * 0.021), // 16 / 745
                     _buildValueCard(
                       icon: Icons.flag_rounded,
-                      title: "Empowering businesses with bold, intuitive digital products.",
+                      title:
+                          '''At Codia Adv, we believe every idea has the potential to become a powerful digital experience that drives meaningful results.
+Our mission is to empower businesses and entrepreneurs by crafting high-quality mobile applications and websites that combine bold design, seamless usability, and reliable performance.''',
                       color: const Color(0xFFf94c30),
                     ),
                   ],
@@ -57,9 +65,8 @@ class _MissionVisionAnimatedSectionState extends State<MissionVisionAnimatedSect
             ),
           ),
 
-          const SizedBox(height: 48),
-
-          // VISION
+          SizedBox(height: h * 0.064), // 48 / 745
+          /// --- VISION ---
           VisibilityDetector(
             key: const Key('vision'),
             onVisibilityChanged: (info) {
@@ -79,10 +86,12 @@ class _MissionVisionAnimatedSectionState extends State<MissionVisionAnimatedSect
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     _buildSectionHeader("Our Vision"),
-                    const SizedBox(height: 16),
+                    SizedBox(height: h * 0.021),
                     _buildValueCard(
                       icon: Icons.visibility_rounded,
-                      title: "Leading the way in human-centered digital innovation.",
+                      title:
+                          '''At Codia Adv, our vision is to lead the way in human-centered digital innovation — where technology meets empathy, and every solution is crafted to truly serve its users. 
+We aim to be a trusted partner for businesses seeking to transform, grow, and lead through purposeful digital experiences.''',
                       color: const Color(0xFF00456B),
                     ),
                   ],
@@ -91,9 +100,9 @@ class _MissionVisionAnimatedSectionState extends State<MissionVisionAnimatedSect
             ),
           ),
 
-          const SizedBox(height: 48),
+          SizedBox(height: h * 0.064),
 
-          // VALUES
+          /// --- VALUES ---
           VisibilityDetector(
             key: const Key('values'),
             onVisibilityChanged: (info) {
@@ -110,42 +119,44 @@ class _MissionVisionAnimatedSectionState extends State<MissionVisionAnimatedSect
                 curve: Curves.easeInOutBack,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-
                   children: [
                     Align(
-                        alignment: Alignment.centerLeft,
-                        child: _buildSectionHeader("Our Values")),
-                    const SizedBox(height: 16),
+                      alignment: Alignment.centerLeft,
+                      child: _buildSectionHeader("Our Values"),
+                    ),
+                    SizedBox(height: h * 0.021),
                     Wrap(
-
-                      spacing: 20,
-                      runSpacing: 20,
+                      spacing: widget.w * 0.013, // 20 / 1525
+                      runSpacing: widget.w * 0.013,
                       children: [
                         _buildValueCard(
                           icon: Icons.lightbulb_outline,
-                          title: "Innovation —   Creating bold ideas with clear  direction .",
+                          title:
+                              "Innovation —   Creating bold ideas with clear  direction .",
                           color: Colors.orange.shade700,
-                          width: 260,
+                          width: widget.w * 0.17, // 260 / 1525
                         ),
                         _buildValueCard(
                           icon: Icons.groups,
-                          title: "Teamwork — Building trust through shared goals and effort.",
+                          title:
+                              "Teamwork — Building trust through shared goals and effort.",
                           color: Colors.blueGrey,
-                          width: 260,
+                          width: widget.w * 0.17,
                         ),
                         _buildValueCard(
                           icon: Icons.shield_rounded,
-                          title: "Integrity —Acting with honesty,fairness,and responsibility.",
+                          title:
+                              "Integrity —Acting with honesty,fairness,and responsibility.",
                           color: Colors.green,
-                          width: 260,
+                          width: widget.w * 0.17,
                         ),
                         _buildValueCard(
                           icon: Icons.star_rounded,
-                          title: "Excellence — Delivering quality with passion and precision.",
+                          title:
+                              "Excellence — Delivering quality with passion and precision.",
                           color: Colors.indigo,
-                          width: 260,
+                          width: widget.w * 0.17,
                         ),
-
                       ],
                     ),
                   ],
@@ -161,8 +172,8 @@ class _MissionVisionAnimatedSectionState extends State<MissionVisionAnimatedSect
   Widget _buildSectionHeader(String text) {
     return Text(
       text,
-      style: const TextStyle(
-        fontSize: 32,
+      style: TextStyle(
+        fontSize: widget.w * 0.021, // 32 / 1525
         fontWeight: FontWeight.w800,
         color: AppColors.primaryColor,
         letterSpacing: 1.2,
@@ -178,13 +189,13 @@ class _MissionVisionAnimatedSectionState extends State<MissionVisionAnimatedSect
   }) {
     return Material(
       elevation: 12,
-      borderRadius: BorderRadius.circular(24),
+      borderRadius: BorderRadius.circular(widget.w * 0.015), // 24 / 1525
       shadowColor: Colors.black26,
       child: Container(
         width: width,
-        padding: const EdgeInsets.all(24),
+        padding: EdgeInsets.all(widget.w * 0.015),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(24),
+          borderRadius: BorderRadius.circular(widget.w * 0.015),
           gradient: LinearGradient(
             colors: [Colors.white, Colors.grey.shade50],
             begin: Alignment.topLeft,
@@ -195,7 +206,7 @@ class _MissionVisionAnimatedSectionState extends State<MissionVisionAnimatedSect
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              padding: const EdgeInsets.all(14),
+              padding: EdgeInsets.all(widget.w * 0.009), // 14 / 1525
               decoration: BoxDecoration(
                 color: color,
                 shape: BoxShape.circle,
@@ -207,14 +218,18 @@ class _MissionVisionAnimatedSectionState extends State<MissionVisionAnimatedSect
                   ),
                 ],
               ),
-              child: Icon(icon, color: Colors.white, size: 26),
+              child: Icon(
+                icon,
+                color: Colors.white,
+                size: widget.w * 0.017, // 26 / 1525
+              ),
             ),
-            const SizedBox(width: 20),
+            SizedBox(width: widget.w * 0.013), // 20 / 1525
             Expanded(
               child: Text(
                 title,
-                style: const TextStyle(
-                  fontSize: 16,
+                style: TextStyle(
+                  fontSize: widget.w * 0.0105, // 16 / 1525
                   color: Colors.black87,
                   fontWeight: FontWeight.w500,
                   height: 1.6,

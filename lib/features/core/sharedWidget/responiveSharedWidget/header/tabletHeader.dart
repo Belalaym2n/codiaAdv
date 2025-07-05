@@ -3,63 +3,55 @@ import '../../../../../config/utils/appConstants.dart';
 import 'sharedWidget.dart'; // تأكد أن المسار صحيح
 
 class TabletHeader extends StatelessWidget {
-  const TabletHeader({super.key});
+  TabletHeader({super.key, required this.width, required this.height});
+
+  final double width;
+  final double height;
 
   @override
   Widget build(BuildContext context) {
     AppConstants.initSize(context);
 
-    return Text("data");
-    // return Container(
-    //   padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-    //   color: Colors.white,
-    //   child: Row(
-    //     children: [
-    //       BuildCodiaName(
-    //         width: AppConstants.screenWidth * (50 / 1528),
-    //         height: AppConstants.screenHeight * (50 / 746),
-    //         fontSize: AppConstants.screenWidth * (35 / 1528), // تقريباً 0.023 * 1528 = 35
-    //       ),
-    //       const SizedBox(width: 40), // مسافة مناسبة بين الشعار والقائمة
-    //
-    //       // قائمة الصفحات مع تمرير أفقي
-    //       Expanded(
-    //         flex: 3,
-    //         child: SingleChildScrollView(
-    //           scrollDirection: Axis.horizontal,
-    //           child: Row(
-    //             mainAxisAlignment: MainAxisAlignment.center,
-    //             children: [
-    //               BuildPages(
-    //
-    //               ),
-    //             ],
-    //           ),
-    //         ),
-    //       ),
-    //
-    //       const SizedBox(width: 40), // مسافة بين الصفحات وباقي الأزرار
-    //
-    //       // زر الإعدادات وزر الطلب
-    //       Row(
-    //         children: [
-    //             BuildSettingsButton(),
-    //           const SizedBox(width: 16),
-    //           BuildRequestButton(),
-    //         ],
-    //       ),
-    //
-    //       const SizedBox(width: 24),
-    //
-    //       // الفاصل العمودي
-    //       const VerticalDividerWidget(),
-    //
-    //       const SizedBox(width: 24),
-    //
-    //       // معلومات الاتصال
-    // //         BuildCallItem(),
-    //     ],
-    //   ),
-    // );
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 600),
+      curve: Curves.easeInOut,
+      padding: EdgeInsets.symmetric(
+        horizontal: width * 0.04,
+        vertical: height * 0.02,
+      ),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black12,
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: Row(
+        children: [
+          SizedBox(width: width * 0.04),
+          buildLogo(width, height),
+          const Spacer(),
+          buildActions(
+            context: context,
+            width: width,
+            height: height,
+            isDesktop: false,
+          ),
+          SizedBox(width: width * 0.01),
+          Flexible(
+            flex: 1,
+            child: settingWidgetInTabAndMobile(
+              context: context,
+              h: height,
+              w: width,
+            ),
+          ),
+          SizedBox(width: width * 0.07),
+        ],
+      ),
+    );
   }
 }

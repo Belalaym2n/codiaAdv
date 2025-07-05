@@ -7,15 +7,17 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
 import '../../../core/sharedWidget/buttons/seeAllDetailsButton.dart';
-import 'blogWidget.dart';
+import '../../../core/sharedWidget/commonWidgetInBlog/blogCard.dart';
 
 class BlogsWebSectionItem extends StatefulWidget {
   final double height;
   final double width;
+  bool isDesktop;
   final List<GetBlogEntity> blogItems;
 
-  const BlogsWebSectionItem({
+  BlogsWebSectionItem({
     super.key,
+    this.isDesktop = true,
     required this.height,
     required this.width,
     required this.blogItems,
@@ -46,28 +48,36 @@ class _BlogsWebSectionState extends State<BlogsWebSectionItem>
     super.initState();
 
     final itemsCount = widget.blogItems.length;
-
+    print(widget.width);
+    print(widget.height);
     _itemControllers = List.generate(
       itemsCount,
-          (index) => AnimationController(
+      (index) => AnimationController(
         vsync: this,
         duration: const Duration(milliseconds: 600),
       ),
     );
 
-    _itemSlideAnimations = _itemControllers
-        .map((controller) => Tween<Offset>(
-      begin: const Offset(0, 0.3),
-      end: Offset.zero,
-    ).animate(CurvedAnimation(parent: controller, curve: Curves.easeOut)))
-        .toList();
+    _itemSlideAnimations =
+        _itemControllers
+            .map(
+              (controller) => Tween<Offset>(
+                begin: const Offset(0, 0.3),
+                end: Offset.zero,
+              ).animate(
+                CurvedAnimation(parent: controller, curve: Curves.easeOut),
+              ),
+            )
+            .toList();
 
-    _itemFadeAnimations = _itemControllers
-        .map((controller) => Tween<double>(
-      begin: 0.0,
-      end: 1.0,
-    ).animate(CurvedAnimation(parent: controller, curve: Curves.easeOut)))
-        .toList();
+    _itemFadeAnimations =
+        _itemControllers
+            .map(
+              (controller) => Tween<double>(begin: 0.0, end: 1.0).animate(
+                CurvedAnimation(parent: controller, curve: Curves.easeOut),
+              ),
+            )
+            .toList();
 
     _textController = AnimationController(
       vsync: this,
@@ -79,34 +89,44 @@ class _BlogsWebSectionState extends State<BlogsWebSectionItem>
       end: Offset.zero,
     ).animate(CurvedAnimation(parent: _textController, curve: Curves.easeOut));
 
-    _headlineFade = Tween<double>(begin: 0, end: 1)
-        .animate(CurvedAnimation(parent: _textController, curve: Curves.easeOut));
+    _headlineFade = Tween<double>(
+      begin: 0,
+      end: 1,
+    ).animate(CurvedAnimation(parent: _textController, curve: Curves.easeOut));
 
     _descSlide = Tween<Offset>(
       begin: const Offset(0, 0.4),
       end: Offset.zero,
-    ).animate(CurvedAnimation(
-      parent: _textController,
-      curve: const Interval(0.2, 1.0, curve: Curves.easeOut),
-    ));
+    ).animate(
+      CurvedAnimation(
+        parent: _textController,
+        curve: const Interval(0.2, 1.0, curve: Curves.easeOut),
+      ),
+    );
 
-    _descFade = Tween<double>(begin: 0, end: 1).animate(CurvedAnimation(
-      parent: _textController,
-      curve: const Interval(0.2, 1.0, curve: Curves.easeOut),
-    ));
+    _descFade = Tween<double>(begin: 0, end: 1).animate(
+      CurvedAnimation(
+        parent: _textController,
+        curve: const Interval(0.2, 1.0, curve: Curves.easeOut),
+      ),
+    );
 
     _buttonSlide = Tween<Offset>(
       begin: const Offset(0, 0.4),
       end: Offset.zero,
-    ).animate(CurvedAnimation(
-      parent: _textController,
-      curve: const Interval(0.5, 1.0, curve: Curves.easeOut),
-    ));
+    ).animate(
+      CurvedAnimation(
+        parent: _textController,
+        curve: const Interval(0.5, 1.0, curve: Curves.easeOut),
+      ),
+    );
 
-    _buttonFade = Tween<double>(begin: 0, end: 1).animate(CurvedAnimation(
-      parent: _textController,
-      curve: const Interval(0.5, 1.0, curve: Curves.easeOut),
-    ));
+    _buttonFade = Tween<double>(begin: 0, end: 1).animate(
+      CurvedAnimation(
+        parent: _textController,
+        curve: const Interval(0.5, 1.0, curve: Curves.easeOut),
+      ),
+    );
   }
 
   void _triggerItemAnimation(int index) {
@@ -144,97 +164,112 @@ class _BlogsWebSectionState extends State<BlogsWebSectionItem>
         }
       },
       child: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Color(0xFFFAFAFA), Color(0xFFF0F0F0)],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
+        padding: EdgeInsets.symmetric(
+          horizontal: 0.039 * widget.height,
+          vertical: 0.11 * widget.height,
+        ),
+        child:
+            widget.isDesktop
+                ? Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(flex: 3, child: buildAboutBlog()),
+
+                    /// Right Blog Cards Section
+                    Expanded(flex: 4, child: buildNews()),
+                  ],
+                )
+                : Column(
+                  children: [
+                    buildAboutBlog(),
+                    SizedBox(height: widget.height * 0.04),
+
+                    buildNews(),
+                  ],
+                ),
+      ),
+    );
+  }
+
+  Widget buildNews() {
+    return SingleChildScrollView(
+      // لو عدد البطاقات كبير
+      scrollDirection: Axis.horizontal,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children:
+            widget.blogItems.asMap().entries.map((entry) {
+              final index = entry.key;
+              final item = entry.value;
+              return Padding(
+                padding: EdgeInsets.only(right: 0.0157 * widget.width),
+                // مسافة بين البطاقات
+                child: SlideTransition(
+                  position: _itemSlideAnimations[index],
+                  child: FadeTransition(
+                    opacity: _itemFadeAnimations[index],
+                    child: BlogCard(
+                      height: widget.height,
+                      width: widget.width,
+                      // خلي العرض مناسب عشان يبقى جنب بعض
+                      image: item.imageUrl,
+                      date: item.blogDate,
+                      title: item.headline,
+                      description: item.description,
+                    ),
+                  ),
+                ),
+              );
+            }).toList(),
+      ),
+    );
+  }
+
+  Widget buildAboutBlog() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        SlideTransition(
+          position: _headlineSlide,
+          child: FadeTransition(
+            opacity: _headlineFade,
+            child: headlineBlog(w: widget.height, isDesktop: widget.isDesktop),
           ),
         ),
-        padding: const EdgeInsets.symmetric(horizontal: 60, vertical: 80),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-             Expanded(
-
-              flex: 3,
-              child: Column(
-
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  SlideTransition(
-                    position: _headlineSlide,
-                    child: FadeTransition(
-                      opacity: _headlineFade,
-                      child: headlineBlog(w: widget.height),
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-                  SlideTransition(
-                    position: _descSlide,
-                    child: FadeTransition(
-                      opacity: _descFade,
-                      child:ConstrainedBox(
-                        constraints: BoxConstraints(maxWidth: 450), // أو أي عرض مناسب
-                        child:  subHeadlineBlog(w: widget.height)),
-                    ),
-                  ),
-                  const SizedBox(height: 36),
-                  SlideTransition(
-                    position: _buttonSlide,
-                    child: FadeTransition(
-                      opacity: _buttonFade,
-                      child:seeAllDetailsButton(
-                        navigate: (){
-                          Navigator.pushNamed(context, AppRoutes.blog);
-                        },
-                         name:  "See All Blogs",
-                      )
-                    ),
-                  ),
-                   const SizedBox(height: 100),
-
-                 ],
+        SizedBox(height: 0.0268 * widget.height),
+        SlideTransition(
+          position: _descSlide,
+          child: FadeTransition(
+            opacity: _descFade,
+            child: ConstrainedBox(
+              constraints: BoxConstraints(
+                maxWidth:
+                    widget.isDesktop ? widget.width * 0.29 : widget.width * 0.5,
+              ), // أو أي عرض مناسب
+              child: subHeadlineBlog(
+                w: widget.height,
+                isDesktop: widget.isDesktop,
               ),
             ),
-
-            /// Right Blog Cards Section
-            Expanded(
-              flex: 4,
-              child: SingleChildScrollView(   // لو عدد البطاقات كبير
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: widget.blogItems.asMap().entries.map((entry) {
-                    final index = entry.key;
-                    final item = entry.value;
-                    return Padding(
-                      padding: const EdgeInsets.only(right: 24),  // مسافة بين البطاقات
-                      child: SlideTransition(
-                        position: _itemSlideAnimations[index],
-                        child: FadeTransition(
-                          opacity: _itemFadeAnimations[index],
-                          child: BlogCard(
-                            height: widget.height,
-                            width: widget.width  , // خلي العرض مناسب عشان يبقى جنب بعض
-                            image: item.imageUrl,
-                            date: item.blogDate,
-                            title: item.headline,
-                            description: item.description,
-                          ),
-                        ),
-                      ),
-                    );
-                  }).toList(),
-                ),
-              ),
-            ),
-
-          ],
+          ),
         ),
-      ),
+        SizedBox(height: 0.049 * widget.height),
+        SlideTransition(
+          position: _buttonSlide,
+          child: FadeTransition(
+            opacity: _buttonFade,
+            child: seeAllDetailsButton(
+              navigate: () {
+                Navigator.pushNamed(context, AppRoutes.blog);
+              },
+              name: "See All Blogs",
+            ),
+          ),
+        ),
+        SizedBox(height: 0.137 * widget.height),
+      ],
     );
   }
 }

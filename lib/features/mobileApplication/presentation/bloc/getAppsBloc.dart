@@ -5,14 +5,26 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class GetAppsBloc extends Bloc<GetAppsEvents, GetAppsStates> {
   GetAppsUseCase useCase;
+  static bool isLoadedBefore = false;
+  static GetAppsBloc? _instance;
 
-  GetAppsBloc({required this.useCase}) : super(GetAppsInitialState()) {
+  static GetAppsBloc getInstance({required GetAppsUseCase useCase}) {
+    _instance ??= GetAppsBloc._internal(useCase: useCase);
+    return _instance!;
+  }
+
+  GetAppsBloc._internal({required this.useCase})
+    : super(GetAppsInitialState()) {
     on<TapTappedGetAppsEvents>((events, emit) async {
+      if (isLoadedBefore) return; // ✅ لو اتحملت قبل كده، ما تعملش حاجة
+
       emit(GetAppsLoading());
 
       final result = await useCase();
       if (result.isSuccess) {
-        emit(GetAppsSuccess(result.data!)); // هنشوف تحسينها تحت
+        isLoadedBefore = true; // هنشوف تحسينها تحت
+
+        emit(GetAppsSuccess(result.data!));
       } else {
         emit(GetAppsFailure(result.error ?? 'حدث خطأ'));
       }

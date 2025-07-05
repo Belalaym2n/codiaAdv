@@ -6,14 +6,14 @@ import 'package:codia_adv/features/blog/news/domain/use_cases/blogUseCase.dart';
 import 'package:codia_adv/features/blog/news/presentation/bloc/blogBloc.dart';
 import 'package:codia_adv/features/blog/news/presentation/bloc/blogEvents.dart';
 import 'package:codia_adv/features/blog/news/presentation/bloc/blogStates.dart';
-import 'package:codia_adv/features/blog/news/presentation/widgets/web/newsItemWeb.dart';
-import 'package:flutter/cupertino.dart';
+ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 import '../../../../core/sharedWidget/responiveSharedWidget/header/headerWeb.dart';
 import '../../data/repositories/dataRepoImpementation.dart';
+import '../widgets/desktop/newsItemWeb.dart';
 
 class NewsScreenWeb extends StatefulWidget {
   NewsScreenWeb({super.key, required this.height, required this.width});

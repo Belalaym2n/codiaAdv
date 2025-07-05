@@ -7,6 +7,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
 import '../aboutUsGeneralWidgets/aboutUsWidgets.dart';
+import '../aboutUsGeneralWidgets/companyDifferanceWidget.dart';
 
 class AboutUsWebItem extends StatelessWidget {
   AboutUsWebItem({Key? key, required this.w, required this.h}) : super(key: key);
@@ -37,23 +38,9 @@ class AboutUsWebItem extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        buildIntroduction(w: w).animate().fade(duration: 400.ms).slideX(begin: -0.3),
-                        const SizedBox(width: 8),
-                        buildCompanyName(w: w).animate().fade(duration: 400.ms).slideX(begin: 0.3),
-                      ],
-                    ),
-                    const SizedBox(height: 10),
-                    buildCompanyType(w: w).animate().fade(duration: 400.ms).slideY(begin: 0.2),
-                    const SizedBox(height: 16),
-                    buildCompanyDescription().animate().fade(duration: 500.ms).slideY(begin: 0.3),
-                  ],
-                ),
+                child:buildAboutCompany(
+                  w,h
+                )
               ),
               const SizedBox(width: 30),
               Container(
@@ -85,17 +72,10 @@ class AboutUsWebItem extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 48),
-          Text(
-            "What Makes Us Different",
-            style: TextStyle(
-              fontSize: 26,
-              fontWeight: FontWeight.bold,
-              color: AppColors.primaryColor,
-            ),
-          ).animate().fade().slideY(begin: 0.1),
+          whatMakesUsDifferanceWidget(w,false),
           const SizedBox(height: 24),
           Wrap(
-            spacing: 36,
+            spacing: 10,
             runSpacing: 36,
             alignment: WrapAlignment.center,
             children: features.asMap().entries.map((entry) {
@@ -104,70 +84,25 @@ class AboutUsWebItem extends StatelessWidget {
 
               return AnimatedVisibilityItem(
                 delay: Duration(milliseconds: i * 250),
-                child: buildCompanyFeature(
+                child: SizedBox( width: w * 0.35
+              ,child:
+              buildCompanyFeature(
                   w: w,
                   h: h,
+                  isDesktop: true,
                   featureName: feature.featureName,
                   featureDescription: feature.featureDescription,
                   bgColor: feature.bgColor,
                   icon: feature.icon,
                 ),
-              );
+              ));
             }).toList(),
           ),
-          const SizedBox(height: 60),
-          MissionVisionAnimatedSection(w: w),
+           MissionVisionAnimatedSection(w: w),
         ],
       ),
     );
   }
 
-  Widget buildCompanyDescription() {
-    return Row(
-      children: [
-        descriptionOne(w: w),
-        const SizedBox(width: 30),
-        descriptionTwo(w: w),
-      ],
-    );
-  }
-}
 
-class AnimatedVisibilityItem extends StatefulWidget {
-  final Widget child;
-  final Duration delay;
-
-  const AnimatedVisibilityItem({
-    Key? key,
-    required this.child,
-    this.delay = Duration.zero,
-  }) : super(key: key);
-
-  @override
-  State<AnimatedVisibilityItem> createState() => _AnimatedVisibilityItemState();
-}
-
-class _AnimatedVisibilityItemState extends State<AnimatedVisibilityItem> {
-  bool _visible = false;
-
-  @override
-  Widget build(BuildContext context) {
-    return VisibilityDetector(
-      key: UniqueKey(),
-      onVisibilityChanged: (info) {
-        if (!_visible && info.visibleFraction > 0.5) {
-          setState(() {
-            _visible = true;
-          });
-        }
-      },
-      child: _visible
-          ? widget.child
-          .animate()
-          .fade(duration: 600.ms)
-          .slideY(begin: 0.2)
-          .then(delay: widget.delay)
-          : Opacity(opacity: 0, child: widget.child),
-    );
-  }
 }

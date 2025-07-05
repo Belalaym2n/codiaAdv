@@ -21,10 +21,12 @@ class RequestCallbackWebItem extends StatefulWidget {
     required this.nameController,
     required this.messageController,
     required this.emailController,
+    required this.isDesktop,
   });
 
   final double h;
   final double w;
+  final bool isDesktop;
   final TextEditingController nameController;
   final TextEditingController phoneController;
   final TextEditingController messageController;
@@ -59,20 +61,21 @@ class _RequestCallbackItemState extends State<RequestCallbackWebItem> {
                           FadeInDown(
                             delay: const Duration(milliseconds: 100),
                             child: requestCallbackHeadline(
-                                fontSize: widget.w * 0.026),
+                              fontSize: widget.w * 0.026,
+                            ),
                           ),
                           const SizedBox(height: 12),
                           FadeInDown(
                             delay: const Duration(milliseconds: 300),
                             child: requestCallbackDescription(
-                                fontSize: widget.w * 0.011),
+                              fontSize: widget.w * 0.011,
+                            ),
                           ),
                           SizedBox(height: widget.h * 0.03),
                           SlideInLeft(
                             delay: const Duration(milliseconds: 500),
                             child: buildInput(
-                              validator:
-                              RequestCallbackValidation.validateName,
+                              validator: RequestCallbackValidation.validateName,
                               hint: 'Your Name',
                               icon: Icons.person,
                               controller: widget.nameController,
@@ -86,7 +89,7 @@ class _RequestCallbackItemState extends State<RequestCallbackWebItem> {
                               icon: Icons.email,
                               controller: widget.emailController,
                               validator:
-                              RequestCallbackValidation.validateEmail,
+                                  RequestCallbackValidation.validateEmail,
                             ),
                           ),
                           SizedBox(height: widget.h * 0.018),
@@ -97,7 +100,7 @@ class _RequestCallbackItemState extends State<RequestCallbackWebItem> {
                               icon: Icons.phone,
                               controller: widget.phoneController,
                               validator:
-                              RequestCallbackValidation.validatePhone,
+                                  RequestCallbackValidation.validatePhone,
                             ),
                           ),
                           SizedBox(height: widget.h * 0.018),
@@ -119,11 +122,7 @@ class _RequestCallbackItemState extends State<RequestCallbackWebItem> {
                       ),
                     ),
                     SizedBox(width: widget.w * 0.06),
-                    ZoomIn(
-                      delay: const Duration(milliseconds: 1000),
-                      duration: const Duration(milliseconds: 1000),
-                      child: buildImage(),
-                    ),
+                    if (widget.isDesktop) buildImage(),
                   ],
                 ),
               ),
@@ -142,11 +141,15 @@ class _RequestCallbackItemState extends State<RequestCallbackWebItem> {
   Widget buildImage() {
     return Expanded(
       flex: 4,
-      child: Center(
-        child: Image.asset(
-          AppImages.requestCall,
-          width: widget.w * 0.32,
-          fit: BoxFit.contain,
+      child: ZoomIn(
+        delay: const Duration(milliseconds: 1000),
+        duration: const Duration(milliseconds: 1000),
+        child: Center(
+          child: Image.asset(
+            AppImages.requestCall,
+            width: widget.w * 0.32,
+            fit: BoxFit.contain,
+          ),
         ),
       ),
     );

@@ -10,6 +10,7 @@ import '../../blog/news/presentation/bloc/blogEvents.dart';
 import '../../core/sharedWidget/responiveSharedWidget/header/headerMobile.dart';
 import '../../core/sharedWidget/responiveSharedWidget/header/tabletHeader.dart';
 
+import 'homePageTablet.dart';
 import 'homePageWeb.dart';
 
 class HomePageItem extends StatelessWidget {
@@ -17,8 +18,9 @@ class HomePageItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool isDesktop(double width) => width >= 1280;
-    bool isTablet(double width) => width >= 600 && width < 1280;
+
+    bool isDesktop(double width) => width >= 1024;
+    bool isTablet(double width) => width >= 600 && width < 1024;
     bool isMobile(double width) => width < 600;
 
     final remoteDs = RemoteDSIMP();
@@ -38,17 +40,20 @@ class HomePageItem extends StatelessWidget {
           ),
         ),
         child: BlocProvider(
-          create: (_) =>
-          BlogBloc.getInstance(blogUseCase: blogUseCase)..add(BlogTabTabbedEvents()),
+          create:
+              (_) =>
+                  BlogBloc.getInstance(blogUseCase: blogUseCase)
+                    ..add(BlogTabTabbedEvents()),
           child: LayoutBuilder(
             builder: (context, constraints) {
               final w = constraints.maxWidth;
               final h = constraints.maxHeight;
-
-              return HomePageWeb(
-                w: w,
-                h: h,
-              );
+              if (isDesktop(w)) {
+                return HomePageWeb(w: w, h: h);
+              } else if (isTablet(w)) {
+                return HomePageTablet(w: w, h: h);
+              }
+              return SizedBox();
             },
           ),
         ),
